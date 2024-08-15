@@ -6,8 +6,10 @@ This is a simple end to end machine learning project that predicts the performan
 to run the project, simply run the following command in the terminal:
 
 requirements:
--conda
--python 3.7
+
+    -conda
+    
+    -python 3.8
 
 ```bash
 conda create -n venv python=3.8 -y
