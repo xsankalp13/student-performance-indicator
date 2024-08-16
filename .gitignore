@@ -2,3 +2,6 @@ venv
 
 *.egg-info
 logs
+*.log
+
+artifcats
