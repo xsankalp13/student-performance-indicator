@@ -9,6 +9,7 @@ import dill
 from src.exception import CustomException
 
 from sklearn.metrics import r2_score
+from sklearn.model_selection import GridSearchCV
 
 
 def save_object(file_path, obj):
@@ -21,20 +22,50 @@ def save_object(file_path, obj):
     except Exception as e:
         raise CustomException(e, sys)
 
-def evaluate_models(X_train, y_train, X_test, y_test, models):
+# def evaluate_models(X_train, y_train, X_test, y_test, models, param):
+#     try:
+#         report = {}
+#         for i in range(len(list(models))):
+#             model = list(models.values())[i]
+#             if model not in param:
+#                 continue
+#             para = param[list(models.keys())[i]]
+
+#             gs= GridSearchCV(model, para, cv=3)
+#             gs.fit(X_train, y_train)
+
+
+#             model.set_params(**gs.best_params_)
+#             model.fit(X_train, y_train)
+
+#             y_test_pred = model.predict(X_test)
+
+#             test_model_score = r2_score(y_test, y_test_pred)
+
+#             report[list(models.keys())[i]] = test_model_score
+#         return report
+
+#     except Exception as e:
+#         raise CustomException(e,sys)
+
+def evaluate_models(X_train, y_train, X_test, y_test, models, param):
     try:
         report = {}
-        for i in range(len(list(models))):
-            model = list(models.values())[i]
+        for model_name, model in models.items():
+            if model_name not in param:
+                raise KeyError(f"Parameters for {model_name} not found in param dictionary")
+            
+            gs = GridSearchCV(model, param[model_name], cv=3)
+            gs.fit(X_train, y_train)
 
+            model.set_params(**gs.best_params_)
             model.fit(X_train, y_train)
 
             y_test_pred = model.predict(X_test)
-
             test_model_score = r2_score(y_test, y_test_pred)
+            report[model_name] = test_model_score
 
-            report[list(models.keys())[i]] = test_model_score
         return report
 
     except Exception as e:
-        raise CustomException(e,sys)
+        raise CustomException(e, sys)
