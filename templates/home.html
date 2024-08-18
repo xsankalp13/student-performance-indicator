@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Exam Performance Indicator</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+</head>
+<body class="bg-gray-100 min-h-screen flex items-center justify-center p-4">
+    <section class="bg-white p-6 rounded-lg shadow-lg w-full max-w-lg">
+        <h1 class="text-2xl font-bold text-gray-800 mb-6 text-center">Student Exam Performance Indicator</h1>
+
+        <form action="{{url_for('predict_datapoint')}}" method="post" class="space-y-4">
+            <div>
+                <label for="gender" class="block text-gray-700">Gender</label>
+                <select name="gender" id="gender" required class="w-full mt-1 p-2 border border-gray-300 rounded">
+                    <option value="" selected disabled>--select your gender--</option>
+                    <option value="male">Male</option>
+                    <option value="female">Female</option>
+                </select>
+            </div>
+
+            <div>
+                <label for="ethnicity" class="block text-gray-700">Race or Ethnicity</label>
+                <select name="ethnicity" id="ethnicity" required class="w-full mt-1 p-2 border border-gray-300 rounded">
+                    <option value="" selected disabled>--select your ethnicity--</option>
+                    <option value="group A">Group A</option>
+                    <option value="group B">Group B</option>
+                    <option value="group C">Group C</option>
+                    <option value="group D">Group D</option>
+                    <option value="group E">Group E</option>
+                </select>
+            </div>
+
+            <div>
+                <label for="parental_level_of_education" class="block text-gray-700">Parental Level of Education</label>
+                <select name="parental_level_of_education" id="parental_level_of_education" required class="w-full mt-1 p-2 border border-gray-300 rounded">
+                    <option value="" selected disabled>--select parental education--</option>
+                    <option value="some high school">Some High School</option>
+                    <option value="high school">High School</option>
+                    <option value="some college">Some College</option>
+                    <option value="associate's degree">Associate's Degree</option>
+                    <option value="bachelor's degree">Bachelor's Degree</option>
+                    <option value="master's degree">Master's Degree</option>
+                </select>
+            </div>
+
+            <div>
+                <label for="lunch" class="block text-gray-700">Lunch</label>
+                <select name="lunch" id="lunch" required class="w-full mt-1 p-2 border border-gray-300 rounded">
+                    <option value="" selected disabled>--select lunch type--</option>
+                    <option value="standard">Standard</option>
+                    <option value="free/reduced">Free/Reduced</option>
+                </select>
+            </div>
+
+            <div>
+                <label for="test_preparation_course" class="block text-gray-700">Test Preparation Course</label>
+                <select name="test_preparation_course" id="test_preparation_course" required class="w-full mt-1 p-2 border border-gray-300 rounded">
+                    <option value="" selected disabled>--select test preparation course--</option>
+                    <option value="none">None</option>
+                    <option value="completed">Completed</option>
+                </select>
+            </div>
+
+            <div>
+                <label for="writing_score" class="block text-gray-700">Writing Score out of 100</label>
+                <input type="number" name="writing_score" id="writing_score" placeholder="Enter Your Writing Score" min="0" max="100" required class="w-full mt-1 p-2 border border-gray-300 rounded">
+            </div>
+
+            <div>
+                <label for="reading_score" class="block text-gray-700">Reading Score out of 100</label>
+                <input type="number" name="reading_score" id="reading_score" placeholder="Enter Your Reading Score" min="0" max="100" required class="w-full mt-1 p-2 border border-gray-300 rounded">
+            </div>
+
+            <div>
+                <input type="submit" value="Predict your Maths Score" class="w-full mt-4 bg-blue-500 text-white p-2 rounded hover:bg-blue-600 cursor-pointer">
+            </div>
+        </form>
+
+        {% if prediction %}
+            <h2 class="text-xl font-semibold text-gray-800 mt-6 text-center">
+                The Predicted Maths Score is: {{ prediction }}
+            </h2>
+        {% endif %}
+    </section>
+</body>
+</html>
